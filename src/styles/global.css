@@ -72,11 +72,10 @@ a:hover { color: var(--gold-light); }
 }
 
 .site-header .inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  position: relative;
+  gap: 0.5rem;
 }
 
 .logo {
@@ -101,9 +100,8 @@ a:hover { color: var(--gold-light); }
   height: 36px;
   width: auto;
   object-fit: contain;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  margin: 0 auto;
   pointer-events: none;
 }
 
@@ -121,6 +119,7 @@ a:hover { color: var(--gold-light); }
   display: flex;
   gap: 1.5rem;
   font-size: 0.92rem;
+  justify-content: flex-end;
 }
 
 .main-nav a {
