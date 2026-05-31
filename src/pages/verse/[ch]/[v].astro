@@ -1,0 +1,83 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import gitaData from '../../../data/gita.json';
+
+export function getStaticPaths() {
+  return gitaData.verses.map(v => ({
+    params: { ch: String(v.chapter), v: String(v.verse) },
+    props: { verse: v },
+  }));
+}
+
+const { ch, v } = Astro.params;
+const { verse } = Astro.props;
+const chNum = parseInt(ch);
+const vNum = parseInt(v);
+const chapterMeta = gitaData.chapters.find(c => c.chapter === chNum)!;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+const allVerses = gitaData.verses;
+const idx = allVerses.findIndex(x => x.chapter === chNum && x.verse === vNum);
+const prevVerse = idx > 0 ? allVerses[idx - 1] : null;
+const nextVerse = idx < allVerses.length - 1 ? allVerses[idx + 1] : null;
+---
+<Layout
+  title={`BG ${ch}.${v}`}
+  description={verse.en.slice(0, 150)}
+>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href={`${base}chapters`}>Chapters</a>
+      <span class="sep">›</span>
+      <a href={`${base}chapter/${ch}`}>Chapter {ch}</a>
+      <span class="sep">›</span>
+      <span>Verse {v}</span>
+    </div>
+
+    <div class="verse-full">
+      <div class="verse-full-header">
+        <div class="ref-badge">BG {ch}.{v}</div>
+        <div class="chapter-yoga">{chapterMeta.hi} · {chapterMeta.en}</div>
+      </div>
+
+      <div class="sanskrit-block">
+        <div class="sanskrit-text">{verse.sanskrit}</div>
+        {verse.transliteration && (
+          <div class="transliteration">{verse.transliteration}</div>
+        )}
+      </div>
+
+      <div class="translations-section">
+        <h3>नेपाली · Nepali</h3>
+        <div class="translation-item nepali-placeholder">
+          <p style="color:var(--text-muted);font-style:italic;font-size:0.88rem;">
+            नेपाली अनुवाद छिट्टै आउँदैछ। — Nepali translation coming soon.
+          </p>
+        </div>
+      </div>
+
+      {verse.en && (
+        <div class="translations-section">
+          <h3>English</h3>
+          <div class="translation-item">
+            <p>{verse.en}</p>
+          </div>
+        </div>
+      )}
+    </div>
+
+    <div class="verse-nav">
+      {prevVerse ? (
+        <a href={`${base}verse/${prevVerse.chapter}/${prevVerse.verse}`}>
+          ← {prevVerse.chapter}.{prevVerse.verse}
+        </a>
+      ) : <span />}
+      <a href={`${base}chapter/${ch}`}>Chapter {ch}</a>
+      {nextVerse ? (
+        <a href={`${base}verse/${nextVerse.chapter}/${nextVerse.verse}`}>
+          {nextVerse.chapter}.{nextVerse.verse} →
+        </a>
+      ) : <span />}
+    </div>
+  </div>
+</Layout>

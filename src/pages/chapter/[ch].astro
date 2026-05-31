@@ -1,0 +1,56 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import gitaData from '../../data/gita.json';
+
+export function getStaticPaths() {
+  return gitaData.chapters.map(ch => ({
+    params: { ch: String(ch.chapter) },
+    props: { chapterMeta: ch },
+  }));
+}
+
+const { ch } = Astro.params;
+const { chapterMeta } = Astro.props;
+const chNum = parseInt(ch);
+const verses = gitaData.verses.filter(v => v.chapter === chNum);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Layout title={`Chapter ${ch} — ${chapterMeta.en}`}>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href={`${base}chapters`}>Chapters</a>
+      <span class="sep">›</span>
+      <span>Chapter {ch}</span>
+    </div>
+
+    <div class="page-header">
+      <h1>{chapterMeta.hi}</h1>
+      <p>{chapterMeta.en} · {chapterMeta.meaning}</p>
+      <p style="margin-top:0.3rem;font-size:0.82rem;color:var(--text-muted)">{chapterMeta.verseCount} verses</p>
+    </div>
+
+    <div class="verse-list">
+      {verses.map(v => (
+        <a href={`${base}verse/${v.chapter}/${v.verse}`} style="text-decoration:none;color:inherit;">
+          <div class="verse-row">
+            <div class="verse-num-badge">{v.verse}</div>
+            <div class="verse-row-text">
+              <div class="sanskrit-preview">{v.sanskrit.split('\n')[0]}</div>
+              <div class="en-preview">{v.en}</div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="verse-nav">
+      {chNum > 1 && (
+        <a href={`${base}chapter/${chNum - 1}`}>← Chapter {chNum - 1}</a>
+      )}
+      <span />
+      {chNum < 18 && (
+        <a href={`${base}chapter/${chNum + 1}`}>Chapter {chNum + 1} →</a>
+      )}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import gitaData from '../data/gita.json';
+
+const { chapters } = gitaData;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Layout title="Chapters" description="Browse all 18 chapters of the Bhagavad Gita">
+  <div class="container">
+    <div class="page-header">
+      <h1>18 Chapters</h1>
+      <p>अष्टादशाध्याय — Browse all chapters and their verses</p>
+    </div>
+
+    <div class="chapters-grid">
+      {chapters.map((ch) => (
+        <a href={`${base}chapter/${ch.chapter}`} class="chapter-card">
+          <div class="chapter-num">Chapter {ch.chapter}</div>
+          <div class="hi-name">{ch.hi}</div>
+          <div class="en-name">{ch.en}</div>
+          <div class="meaning">{ch.meaning}</div>
+          <div class="verse-count">{ch.verseCount} verses</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

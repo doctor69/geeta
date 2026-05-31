@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Search from '../components/Search';
+import gitaData from '../data/gita.json';
+
+const { verses, chapters } = gitaData;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Layout title="Search">
+  <section class="hero">
+    <div class="hero-om">ॐ</div>
+    <h1>
+      <span class="devanagari">श्रीमद्भगवद्गीता</span>
+      Bhagavad Gita
+    </h1>
+    <p>Remember the wisdom, find the verse. Search by meaning, concept or story.</p>
+  </section>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem;">
+    <Search
+      client:load
+      verses={verses}
+      chapters={chapters}
+      base={base}
+    />
+  </div>
+</Layout>
+
+<style is:global>
+mark {
+  background: rgba(200, 151, 58, 0.25);
+  color: var(--gold-light);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+</style>

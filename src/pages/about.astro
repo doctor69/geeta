@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Layout title="About">
+  <div class="container">
+    <div class="page-header">
+      <h1>About</h1>
+      <p>ज्ञानं ते अहं सविज्ञानम् — I shall impart to you knowledge and wisdom</p>
+    </div>
+
+    <div style="max-width:650px;line-height:1.85;color:var(--text);">
+      <p style="margin-bottom:1.5rem;">
+        The <strong style="color:var(--gold)">Bhagavad Gita</strong> contains 710 verses across 18 chapters, spoken by Lord Krishna to Arjuna on the battlefield of Kurukshetra. It is one of the most profound texts in world philosophy.
+      </p>
+      <p style="margin-bottom:1.5rem;">
+        This site is built for those who <em>remember the meaning</em> but forget the exact Sanskrit verse. Search by concept, theme or the story you recall — the exact Sanskrit shloka will appear.
+      </p>
+
+      <h2 style="color:var(--gold);font-weight:normal;margin-bottom:1rem;font-size:1.2rem;">How to search</h2>
+      <ul style="color:var(--text-dim);padding-left:1.5rem;margin-bottom:2rem;">
+        <li style="margin-bottom:0.5rem;">Describe the <strong style="color:var(--text)">meaning or story</strong> — "the soul is never destroyed"</li>
+        <li style="margin-bottom:0.5rem;">Use <strong style="color:var(--text)">concepts</strong> — "detachment from results", "three gunas"</li>
+        <li style="margin-bottom:0.5rem;">Try <strong style="color:var(--text)">characters or events</strong> — "Arjuna refuses to fight", "Krishna's universal form"</li>
+        <li style="margin-bottom:0.5rem;">Use <strong style="color:var(--text)">moral teachings</strong> — "do your duty", "better death in own dharma"</li>
+      </ul>
+
+      <h2 style="color:var(--gold);font-weight:normal;margin-bottom:1rem;font-size:1.2rem;">Sources</h2>
+      <p style="color:var(--text-dim);margin-bottom:1.5rem;">
+        Translations by Swami Sivananda, Shri Purohit Swami, A.C. Bhaktivedanta Swami Prabhupada, Swami Gambirananda, and others. Data via <a href="https://vedicscriptures.github.io" target="_blank" rel="noopener">VedicScriptures API</a> (MIT License).
+      </p>
+
+      <p style="color:var(--text-muted);font-size:0.9rem;font-style:italic;">
+        Note: Nepali translation is not yet available in the current data source. It will be added when a reliable open source becomes available.
+      </p>
+    </div>
+  </div>
+</Layout>
