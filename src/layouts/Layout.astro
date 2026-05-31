@@ -43,13 +43,23 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <span>Bhagavad Gita</span>
       </a>
       <img src={`${base}nepal-flag.gif`} alt="Nepal" class="nepal-flag-center" />
-      <nav class="main-nav">
+      <nav class="main-nav" id="main-nav">
         <a href={base}>Search</a>
         <a href={`${base}chapters`}>Chapters</a>
         <a href={`${base}about`}>About</a>
       </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href={base}>Search</a>
+    <a href={`${base}chapters`}>Chapters</a>
+    <a href={`${base}about`}>About</a>
+  </div>
 
   <main>
     <slot />
@@ -63,5 +73,23 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <p style="margin-top:0.3rem;font-size:0.78rem;">Data from <a href="https://vedicscriptures.github.io" target="_blank" rel="noopener">VedicScriptures</a> · MIT License</p>
     </div>
   </footer>
+
+  <script>
+    const btn = document.getElementById('hamburger')!;
+    const nav = document.getElementById('mobile-nav')!;
+    btn.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      nav.setAttribute('aria-hidden', String(!open));
+    });
+    // close when a link is tapped
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      nav.setAttribute('aria-hidden', 'true');
+    }));
+  </script>
 </body>
 </html>
